@@ -62,6 +62,15 @@ const Userform = ({userdetails}) => {
   const handleprev=()=>{
     setStep(1)
   }
+  const handleSubmitform=()=>{
+    let values=formik.values
+    if(nexttext=="SUBMIT" || step==2){
+      alert(JSON.stringify(values))
+    }
+    else if(step==1 && nexttext=="NEXT"){
+      setStep(2)
+    }
+  }
   useEffect(()=>{
       if(formik.values.qualification=="UG"){
         setnexttext("SUBMIT")
@@ -80,7 +89,7 @@ const Userform = ({userdetails}) => {
         <Box sx={{
           bgcolor: "white", height: "60vh", display: "flex", alignItems: "center", justifyContent: "center"
         }}>
-          <form onSubmit={formik.handleSubmit}>
+          <form >
             <div style={{ textAlign: "center", fontSize: "30px", marginBottom: "30px", color: "dodgerblue", fontWeight: "700" }}>Form</div>
             <TextField
               sx={{ marginBottom: "20px", width: "400px" }}
@@ -149,7 +158,7 @@ const Userform = ({userdetails}) => {
               helperText={formik.errors.password}
             /><br />
             <div style={{ textAlign: "center" }}>
-              <Button variant="outlined" type="submit" >{nexttext}</Button>
+              <Button variant="outlined" type="button" onClick={handleSubmitform} >{nexttext}</Button>
             </div>
           </form>
         </Box>
