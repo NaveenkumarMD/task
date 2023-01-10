@@ -19,8 +19,12 @@ export default function ControlledAccordions() {
 
   return (
     <div>
+            <Typography variant="h3" sx={{textAlign:"center",color:"dodgerblue",marginTop:"50px"}} component="h2">
+  Users Profile
+</Typography>;
       <CssBaseline />
       <Container>
+
         <Stack spacing={3} sx={{marginTop:"40px"}} >
           
             <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
@@ -41,7 +45,11 @@ export default function ControlledAccordions() {
                   name:"Naveenkumar",
                   email:"naveen9715568487@gmail.com",
                   mobile:8870499146,
+                  qualification:"UG",
                   password:"Naveen@1",
+                  pgcompletionyear:"2022",
+                  pgcollege:"CIT",
+                  pgproject:"NONE"
                 }} />
               </AccordionDetails>
             </Accordion>
@@ -63,7 +71,11 @@ export default function ControlledAccordions() {
                   name:"Naveen",
                   email:"naveen@gmail.com",
                   mobile:8870499146,
+                  qualification:"PG",
                   password:"Naveen@1",
+                  pgcompletionyear:"2022",
+                  pgcollege:"CIT",
+                  pgproject:"NONE"
                 }}/>
               </AccordionDetails>
             </Accordion>
@@ -85,7 +97,11 @@ export default function ControlledAccordions() {
                   name:"kumar",
                   email:"kumar@gmail.com",
                   mobile:8870499146,
+                  qualification:"UG",
                   password:"Naveen@1",
+                  pgcompletionyear:"2022",
+                  pgcollege:"CIT",
+                  pgproject:"NONE"
                 }} />
               </AccordionDetails>
             </Accordion>
