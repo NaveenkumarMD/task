@@ -13,22 +13,32 @@ import { Stack } from "@mui/system";
 
 const validationSchema = yup.object({
   name: yup
-    .string("Enter your name"),
+    .string("Enter your name")
+    .min(5,'Name should be atleast 4 letters')
+    .required("Please Enter the name"),
   email: yup
     .string('Enter your email')
-    .email('Enter a valid email'),
+    .email('Enter a valid email')
+    .required("Enter the E-mail"),
   mobile: yup
-    .number("Enter the 10 digit mobile number")
+    .string("Enter the 10 digit mobile number")
+    .min(10,"Number should be of 10 digit")
+    .max(10,"Number should be of 10 digit")
     .required("Mobile is required"),
   password: yup
     .string('Enter your password')
-    .min(8, 'Password should be of minimum 8 characters length'),
+    .min(8, 'Password should be of minimum 8 characters length')
+    .required("Enter the password"),
   pgcompletionyear:yup
-    .string(),
+    .string("Enter the completion year")
+    .min(4,"Year should be in terms of YYYY")
+    .max(4,"Year should be in terms of YYYY")
+    .required("Enter the PG completion year"),
   pgcollege:yup
-    .string(),
+    .string("Enter the college name")
+    .required("Enter the pgcollege"),
   pgroject:yup
-    .string(),
+    .string("Enter the project title"),
 
 })
 const Userform = ({userdetails}) => {
@@ -68,7 +78,7 @@ const Userform = ({userdetails}) => {
       
       <Container maxWidth="sm">
         <Box sx={{
-          bgcolor: "white", height: "50vh", display: "flex", alignItems: "center", justifyContent: "center"
+          bgcolor: "white", height: "60vh", display: "flex", alignItems: "center", justifyContent: "center"
         }}>
           <form onSubmit={formik.handleSubmit}>
             <div style={{ textAlign: "center", fontSize: "30px", marginBottom: "30px", color: "dodgerblue", fontWeight: "700" }}>Form</div>
@@ -79,6 +89,7 @@ const Userform = ({userdetails}) => {
               name="name"
               value={formik.values.name}
               onChange={formik.handleChange}
+              helperText={formik.errors.name}
               error={formik.touched.name && Boolean(formik.errors.name)}
               label="Name"
             /><br />
@@ -90,6 +101,7 @@ const Userform = ({userdetails}) => {
               type="text"
               value={formik.values.email}
               onChange={formik.handleChange}
+              helperText={formik.errors.email}
               error={formik.touched.email && Boolean(formik.errors.email)}
               label="E-mail"
             /><br />
@@ -120,6 +132,7 @@ const Userform = ({userdetails}) => {
               value={formik.values.mobile}
               onChange={formik.handleChange}
               error={formik.touched.name && Boolean(formik.errors.mobile)}
+              helperText={formik.errors.mobile}
               label="Mobile"
               type="number"
             /><br />
@@ -133,6 +146,7 @@ const Userform = ({userdetails}) => {
               error={formik.touched.password && Boolean(formik.errors.password)}
               label="Password"
               type="password"
+              helperText={formik.errors.password}
             /><br />
             <div style={{ textAlign: "center" }}>
               <Button variant="outlined" type="submit" >{nexttext}</Button>
@@ -156,8 +170,9 @@ const Userform = ({userdetails}) => {
               name="pgcompletionyear"
               value={formik.values.pgcompletionyear}
               onChange={formik.handleChange}
-              error={formik.touched.pgcompletionyear && Boolean(formik.errors.completionyear)}
+              error={formik.touched.pgcompletionyear && Boolean(formik.errors.pgcompletionyear)}
               label="PG completion year"
+              helperText={formik.errors.pgcompletionyear}
             /><br />
             <TextField
               sx={{ marginBottom: "20px", width: "400px" }}
@@ -169,14 +184,14 @@ const Userform = ({userdetails}) => {
               onChange={formik.handleChange}
               error={formik.touched.pgcollege && Boolean(formik.errors.pgcollege)}
               label="PG college"
+              helperText={formik.errors.pgcollege}
             /><br />
             <TextField
               sx={{ marginBottom: "20px", width: "400px" }}
-              required
               id="pgproject"
               name="pgproject"
               value={formik.values.pgproject}
-              onChange={formik.pgproject}
+              onChange={formik.handleChange}
               error={formik.touched.pgproject && Boolean(formik.errors.pgproject)}
               label="PG project"
             /><br />
