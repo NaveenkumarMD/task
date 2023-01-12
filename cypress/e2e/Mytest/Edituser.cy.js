@@ -53,9 +53,8 @@ describe('Editing user data',()=>{
         cy.get("#submitbtn").should("have.text","SUBMIT")
         .first()
         .click()
-        cy.on("window:alert",(txt)=>{
-            expect(txt).to.contains(`Done`)
-        })
+        cy.contains('Done')
+ 
     });
     
     it('Editing the data with PG data', () => {
@@ -111,9 +110,7 @@ describe('Editing user data',()=>{
         .clear()
         .type(`${userdata.pgproject}`)
         cy.get("[test-data=pgsubmitbtn]").click() 
-        cy.on("window:alert",(txt)=>{
-            expect(txt).to.contains(`Done`)
-        })
+        cy.contains("Done")
     });
     
     

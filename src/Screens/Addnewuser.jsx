@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '../Components/Navbar'
 import { Box,Container } from '@mui/system'
 import { Button, TextField, Typography } from '@mui/material'
 import { useFormik } from 'formik'
 import * as yup from "yup"
+import { useNavigate } from 'react-router-dom'
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 const validationSchema=yup.object({
     name: yup
     .string("Enter your name")
@@ -12,6 +16,9 @@ const validationSchema=yup.object({
 })
 
 function Adduserscreen() {
+  const navigate=useNavigate()
+  const [snackoopen,setSnackopen]=useState(false)
+  const [snackmsg,setsnackmsg]=useState("")
     const formik=useFormik({
         initialValues:{
             name:""
@@ -21,7 +28,9 @@ function Adduserscreen() {
             const currentdata=JSON.parse(localStorage.getItem("userdata"))
             for (var idx in currentdata){
                 if (currentdata[idx].name==values.name){
-                    return alert("Name already found")
+                  setsnackmsg("Name already found")
+                  setSnackopen(true)
+                    return 
                 }
             }
             currentdata.push({
@@ -36,13 +45,38 @@ function Adduserscreen() {
             pgproject:""
             })  
             localStorage.setItem("userdata",JSON.stringify(currentdata))
-            alert("new user added successfully")          
+            setsnackmsg("User added successfully")
+            setSnackopen(true)
+            setTimeout(()=>{
+              navigate("/")
+            },[1000])
+               
         } 
         
     })
+    const action = (
+      <React.Fragment  >
+        <IconButton sx={{color:"dodgerblue"}}
+        onClick={()=>setSnackopen(false)}
+          size="small"
+          aria-label="close"
+          color="inherit"
+      
+        >
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      </React.Fragment>
+    );
   return (
     <>
     <Navbar/>
+    <Snackbar
+        open={snackoopen}
+        autoHideDuration={1000}
+        message={snackmsg}
+        action={action}
+        severity="success"
+      />
     <Container maxWidth="sm">
         <Box sx={{
           bgcolor: "white", height: "60vh", display: "flex", alignItems: "center", justifyContent: "center"
@@ -71,5 +105,6 @@ function Adduserscreen() {
 
   )
 }
+
 
 export default Adduserscreen

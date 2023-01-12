@@ -70,14 +70,16 @@ function Navbar(props) {
             User manager
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item,idx) => (
-              <Button key={item} data-test={navRoutes[idx]} sx={{ color: '#fff' }} onClick={()=>navigate(navRoutes[idx])}>
-                {item}
+
+              <Button  data-test="/" sx={{ color: '#fff' }} onClick={()=>navigate("/")} >
+                Home
               </Button>
-            ))}
+              <Button  data-test="Adduser" sx={{ color: '#fff' }} onClick={()=>navigate("/Adduser")} >
+                Add user
+              </Button>
           </Box>
         </Toolbar>
-      </AppBar>
+      </AppBar> 
       <Box component="nav">
         <Drawer
           container={container}

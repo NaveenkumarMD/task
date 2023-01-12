@@ -9,7 +9,9 @@ import MenuItem from '@mui/material/MenuItem';
 import * as yup from "yup"
 import { useFormik } from 'formik';
 import { Stack } from "@mui/system";
-
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 const validationSchema = yup.object({
   name: yup
@@ -43,6 +45,8 @@ const validationSchema = yup.object({
 })
 const Userform = ({userdetails}) => {
   const [step,setStep]=useState(1)
+    const [snackoopen,setSnackopen]=useState(false)
+  const [snackmsg,setsnackmsg]=useState("")
   const [nexttext,setnexttext]=useState("NEXT")
   const formik = useFormik({
     initialValues: {
@@ -63,6 +67,19 @@ const Userform = ({userdetails}) => {
   const handleprev=()=>{
     setStep(1)
   }
+  const action = (
+      <React.Fragment  >
+        <IconButton sx={{color:"dodgerblue"}}
+        onClick={()=>setSnackopen(false)}
+          size="small"
+          aria-label="close"
+          color="inherit"
+      
+        >
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      </React.Fragment>
+    );
   const handleSubmitform=()=>{
     let values=formik.values
     if(nexttext=="SUBMIT" || step==2){
@@ -78,7 +95,8 @@ const Userform = ({userdetails}) => {
         }
       }
       localStorage.setItem("userdata",JSON.stringify(userdata))
-      alert('Done')
+      setsnackmsg('Done')
+      setSnackopen(true)
     }
     else if(step==1 && nexttext=="NEXT"){
       setStep(2)
@@ -94,6 +112,13 @@ const Userform = ({userdetails}) => {
   },[formik.values.qualification])
   return (
     <div>
+        <Snackbar
+        open={snackoopen}
+        autoHideDuration={1000}
+        message={snackmsg}
+        action={action}
+        severity="success"
+      />
       <CssBaseline />
       {
         step==1 &&
