@@ -52,6 +52,7 @@ const Userform = ({userdetails}) => {
     onSubmit: (values) => {
       console.log(nexttext,step)
       if(nexttext=="SUBMIT" || step==2){
+
         alert(JSON.stringify(values))
       }
       else if(step==1 && nexttext=="NEXT"){
@@ -65,7 +66,19 @@ const Userform = ({userdetails}) => {
   const handleSubmitform=()=>{
     let values=formik.values
     if(nexttext=="SUBMIT" || step==2){
-      alert(JSON.stringify(values))
+      let userdata=JSON.parse(localStorage.getItem("userdata"))
+      console.log(userdata)
+
+      for(var i in userdata){
+        if(userdata[i].id==values.id){
+          userdata[i]={
+            ...values
+          }
+          break
+        }
+      }
+      localStorage.setItem("userdata",JSON.stringify(userdata))
+      alert('Done')
     }
     else if(step==1 && nexttext=="NEXT"){
       setStep(2)
@@ -99,8 +112,9 @@ const Userform = ({userdetails}) => {
               value={formik.values.name}
               onChange={formik.handleChange}
               helperText={formik.errors.name}
-              error={formik.touched.name && Boolean(formik.errors.name)}
+              error={Boolean(formik.errors.name)}
               label="Name"
+              className="input"
             /><br />
             <TextField
               sx={{ marginBottom: "20px", width: "400px" }}
@@ -111,11 +125,12 @@ const Userform = ({userdetails}) => {
               value={formik.values.email}
               onChange={formik.handleChange}
               helperText={formik.errors.email}
-              error={formik.touched.email && Boolean(formik.errors.email)}
+              error={Boolean(formik.errors.email)}
               label="E-mail"
             /><br />
                     <TextField
           id="qualification"
+          test-data="qualification"
           name="qualification"
           select
           label="Highest qualification"
@@ -125,10 +140,10 @@ const Userform = ({userdetails}) => {
           sx={{ marginBottom: "20px", width: "400px" }}
         >
           
-            <MenuItem  value="PG">
+            <MenuItem  value="PG" name="PGqualification" id="PGqualification">
               Post graduate
             </MenuItem>
-            <MenuItem  value="UG">
+            <MenuItem  value="UG" id="UGqualification" name="UGqualification">
               Under graduate
             </MenuItem>
           
@@ -140,7 +155,7 @@ const Userform = ({userdetails}) => {
               name="mobile"
               value={formik.values.mobile}
               onChange={formik.handleChange}
-              error={formik.touched.name && Boolean(formik.errors.mobile)}
+              error={Boolean(formik.errors.mobile)}
               helperText={formik.errors.mobile}
               label="Mobile"
               type="number"
@@ -152,13 +167,13 @@ const Userform = ({userdetails}) => {
               name="password"
               value={formik.values.password}
               onChange={formik.handleChange}
-              error={formik.touched.password && Boolean(formik.errors.password)}
+              error={Boolean(formik.errors.password)}
               label="Password"
               type="password"
               helperText={formik.errors.password}
             /><br />
-            <div style={{ textAlign: "center" }}>
-              <Button variant="outlined" type="button" onClick={handleSubmitform} >{nexttext}</Button>
+            <div style={{ textAlign: "center" }} >
+              <Button variant="outlined" type="button" id="submitbtn" test-data="submitbtn" onClick={handleSubmitform} >{nexttext}</Button>
             </div>
           </form>
         </Box>
@@ -179,7 +194,7 @@ const Userform = ({userdetails}) => {
               name="pgcompletionyear"
               value={formik.values.pgcompletionyear}
               onChange={formik.handleChange}
-              error={formik.touched.pgcompletionyear && Boolean(formik.errors.pgcompletionyear)}
+              error={  Boolean(formik.errors.pgcompletionyear)}
               label="PG completion year"
               helperText={formik.errors.pgcompletionyear}
             /><br />
@@ -191,7 +206,7 @@ const Userform = ({userdetails}) => {
               type="text"
               value={formik.values.pgcollege}
               onChange={formik.handleChange}
-              error={formik.touched.pgcollege && Boolean(formik.errors.pgcollege)}
+              error={Boolean(formik.errors.pgcollege)}
               label="PG college"
               helperText={formik.errors.pgcollege}
             /><br />
@@ -201,12 +216,12 @@ const Userform = ({userdetails}) => {
               name="pgproject"
               value={formik.values.pgproject}
               onChange={formik.handleChange}
-              error={formik.touched.pgproject && Boolean(formik.errors.pgproject)}
+              error={ Boolean(formik.errors.pgproject)}
               label="PG project"
             /><br />
             <Stack direction="row" width="100%" justifyContent="space-around" >
             <Button variant="outlined" type="button" onClick={handleprev} >Previous</Button>
-            <Button variant="contained" type="submit" >Submit</Button>
+            <Button variant="contained" type="button" onClick={handleSubmitform} test-data="pgsubmitbtn" >Submit</Button>
             </Stack>
           </form>
         </Box>
