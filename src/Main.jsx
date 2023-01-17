@@ -50,7 +50,8 @@ export default function Main() {
           <InputLabel htmlFor="input-with-icon-adornment " sx={{ fontSize: "20px" }}>
             Search users
           </InputLabel>
-          <Input
+          <Input 
+          test-data="search-container"
             sx={{ fontSize: "20px" }}
             onChange={e => setsearchtext(e.target.value)}
             id="input-with-icon-adornment"
