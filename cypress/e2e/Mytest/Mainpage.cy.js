@@ -6,6 +6,7 @@ describe('Home page rendering', () => {
     beforeEach(()=>{
         cy.visit("http://localhost:3000")
     })
+    
 
     //clear local storage
 

@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Userform from './Components/form';
 import Avatar from '@mui/material/Avatar';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Stack } from '@mui/system';
 import Userdata from './userdata.json'
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -18,6 +19,7 @@ import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import { Search, SearchRounded } from '@mui/icons-material';
+import CloseIcon from '@mui/icons-material/Close';
 export default function Main() {
   const [expanded, setExpanded] = useState(false);
   const [searchtext, setsearchtext] = useState(null)
@@ -36,7 +38,16 @@ export default function Main() {
     console.log(localuserdata)
   }, [])
 
-
+  const handledelete=(idx,userdata)=>{
+    let temp=[...usersdata]
+    let userdataaltered=temp.filter((data)=>{
+      console.log(data.name,userdata.name)
+      return data.name!=userdata.name
+    })
+    console.log(userdataaltered)
+    setuserdata(userdataaltered)
+    localStorage.setItem("userdata",JSON.stringify(userdataaltered))
+  }
   return (
     <div>
       <Navbar />
@@ -71,7 +82,14 @@ export default function Main() {
                 return (
                   <Accordion className="user-container" key={idx} expanded={expanded === 'panel' + idx.toString()} onChange={handleChange('panel' + idx.toString())}>
                     <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
+                      expandIcon={
+                        <>
+                      <Stack direction="row" alignItems="center" gap="10px" >
+                      <ExpandMoreIcon  />
+                      
+                      </Stack>
+                      </>
+                    }
                       aria-controls={'panel' + idx.toString() + 'bh-content'}
                       id={'panel' + idx.toString() + 'bh-header'}
                     >
@@ -82,10 +100,16 @@ export default function Main() {
                         <Typography sx={{ width: '33%', flexShrink: 0 }}>
                           {userdata.name}
                         </Typography>
+          
                       </Stack>
                     </AccordionSummary>
                     <AccordionDetails>
+                      <>
                       <Userform userdetails={userdata} />
+                      <div onClick={()=>handledelete(idx,userdata)} style={{textAlign:"right",cursor:"pointer"}}>
+                      <DeleteIcon color='red' />
+                      </div>
+                      </>
                     </AccordionDetails>
                   </Accordion>)
               }
